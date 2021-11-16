@@ -18,10 +18,10 @@ const Layout = ({
     );
   }
   return (
-    <SafeAreaView style={[{flex: 1, backgroundColor}, style]}>
-      {statusBar && <StatusBar />}
+    <View style={[{flex: 1, backgroundColor}, style]}>
+      {!statusBar && <StatusBar />}
       {children}
-    </SafeAreaView>
+    </View>
   );
 };
 

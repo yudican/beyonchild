@@ -1,4 +1,5 @@
 import {
+  RESET_SCHOOL_RECOMENDATION_FILTER,
   SCHOOL_FACILITY,
   SCHOOL_FACILITY_ERROR,
   SCHOOL_FACILITY_LOADING,
@@ -22,6 +23,12 @@ import {
 export const schoolRecomendationFilterLevel = payload => {
   return {
     type: SCHOOL_RECOMENDATION_FILTER,
+    payload,
+  };
+};
+export const resetSchoolRecomendationFilterLevel = payload => {
+  return {
+    type: RESET_SCHOOL_RECOMENDATION_FILTER,
     payload,
   };
 };

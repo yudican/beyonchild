@@ -1,4 +1,5 @@
 import {
+  RESET_SCHOOL_RECOMENDATION_FILTER,
   SCHOOL_FACILITY_ERROR,
   SCHOOL_FACILITY_LOADING,
   SCHOOL_FACILITY_SUCCESS,
@@ -29,6 +30,12 @@ const schoolReducer = (state = INITIAL_STATE, {type, payload}) => {
         ...state,
         isLoading: false,
         filters: {...state.filters, ...payload},
+      };
+    case RESET_SCHOOL_RECOMENDATION_FILTER:
+      return {
+        ...state,
+        isLoading: false,
+        filters: {},
       };
 
     // Get School Level

@@ -42,6 +42,8 @@ export const GET_CHILD_LOADING = 'GET_CHILD_LOADING';
 
 // Set Filter
 export const SCHOOL_RECOMENDATION_FILTER = 'SCHOOL_RECOMENDATION_FILTER';
+export const RESET_SCHOOL_RECOMENDATION_FILTER =
+  'RESET_SCHOOL_RECOMENDATION_FILTER';
 
 // School Level
 export const SCHOOL_LEVEL = 'SCHOOL_LEVEL';
@@ -73,3 +75,5 @@ export const SCHOOL_RECOMENDATION_LIST_LOADING =
 // =================================================================== //
 //                            END SCHOOL DATA                          //
 // =================================================================== //
+
+export const SET_MILESTONE = 'SET_MILESTONE';

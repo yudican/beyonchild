@@ -8,12 +8,14 @@ import {
   GET_MINAT_BAKAT_ERROR,
   GET_MINAT_BAKAT_LOADING,
   GET_MINAT_BAKAT_SUCCESS,
+  SET_MILESTONE,
 } from '../../../utils/constant/redux';
 
 const INITIAL_STATE = {
   isLoading: false,
   minatBakats: [],
   childs: [],
+  milestones: [],
 };
 const childReducer = (state = INITIAL_STATE, {type, payload}) => {
   switch (type) {
@@ -71,6 +73,12 @@ const childReducer = (state = INITIAL_STATE, {type, payload}) => {
       return {
         ...state,
         isLoading: true,
+      };
+
+    case SET_MILESTONE:
+      return {
+        ...state,
+        milestones: payload,
       };
 
     default:

@@ -11,6 +11,7 @@ import {
   GET_MINAT_BAKAT_ERROR,
   GET_MINAT_BAKAT_LOADING,
   GET_MINAT_BAKAT_SUCCESS,
+  SET_MILESTONE,
 } from '../../../utils/constant/redux';
 
 export const getMinatBakat = payload => {
@@ -86,6 +87,14 @@ export const getChildError = payload => {
 export const getChildLoading = payload => {
   return {
     type: GET_CHILD_LOADING,
+    payload,
+  };
+};
+
+// Milestone
+export const setMiletone = payload => {
+  return {
+    type: SET_MILESTONE,
     payload,
   };
 };

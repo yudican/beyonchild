@@ -3,6 +3,9 @@ import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AddChild from '../../container/pages/Chilld/AddChild';
 import Home from '../../container/pages/HomeScreen';
+import MileStone from '../../container/pages/HomeScreen/Milestone';
+import MilestoneResult from '../../container/pages/HomeScreen/Milestone/MilestoneResult';
+import MilstoneDetail from '../../container/pages/HomeScreen/Milestone/MilstoneDetail';
 import RekomendasiSekolahScreen from '../../container/pages/HomeScreen/RekomendasiSekolahScreen';
 import FilterRekomendasiSekolahScreen from '../../container/pages/HomeScreen/RekomendasiSekolahScreen/FilterRekomendasiSekolahScreen';
 import ListSekolah from '../../container/pages/HomeScreen/RekomendasiSekolahScreen/ListSekolahScreen';
@@ -110,6 +113,78 @@ const PrivateRoute = () => {
           headerBackTitle: 'Nama Sekolah',
           headerTintColor: DARK_COLOR,
           headerTitle: 'Nama Sekolah',
+          headerLeft: props => (
+            <Ionicons
+              name="arrow-back-outline"
+              style={{paddingLeft: scaleWidth(3)}}
+              color={DARK_COLOR}
+              size={scaleHeight(3)}
+              onPress={() => navigation.goBack()}
+            />
+          ),
+          headerTitleStyle: {
+            fontFamily: 'Poppins',
+            color: DARK_COLOR,
+            fontWeight: 'bold',
+          },
+        })}
+      />
+      <Stack.Screen
+        name="MileStone"
+        component={MileStone}
+        options={({navigation, route}) => ({
+          headerStyle: {backgroundColor: '#fff'},
+          headerBackTitle: 'Milestone',
+          headerTintColor: DARK_COLOR,
+          headerTitle: 'Milestone',
+          headerLeft: props => (
+            <Ionicons
+              name="arrow-back-outline"
+              style={{paddingLeft: scaleWidth(3)}}
+              color={DARK_COLOR}
+              size={scaleHeight(3)}
+              onPress={() => navigation.goBack()}
+            />
+          ),
+          headerTitleStyle: {
+            fontFamily: 'Poppins',
+            color: DARK_COLOR,
+            fontWeight: 'bold',
+          },
+        })}
+      />
+      <Stack.Screen
+        name="MilstoneDetail"
+        component={MilstoneDetail}
+        options={({navigation, route}) => ({
+          headerStyle: {backgroundColor: '#fff'},
+          headerBackTitle: 'Milestone',
+          headerTintColor: DARK_COLOR,
+          headerTitle: 'Milestone',
+          headerLeft: props => (
+            <Ionicons
+              name="arrow-back-outline"
+              style={{paddingLeft: scaleWidth(3)}}
+              color={DARK_COLOR}
+              size={scaleHeight(3)}
+              onPress={() => navigation.goBack()}
+            />
+          ),
+          headerTitleStyle: {
+            fontFamily: 'Poppins',
+            color: DARK_COLOR,
+            fontWeight: 'bold',
+          },
+        })}
+      />
+      <Stack.Screen
+        name="MilestoneResult"
+        component={MilestoneResult}
+        options={({navigation, route}) => ({
+          headerStyle: {backgroundColor: '#fff'},
+          headerBackTitle: 'Milestone',
+          headerTintColor: DARK_COLOR,
+          headerTitle: 'Milestone',
           headerLeft: props => (
             <Ionicons
               name="arrow-back-outline"

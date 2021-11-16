@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {ScrollView, StyleSheet, TextInput, View} from 'react-native';
 import {Searchbar} from 'react-native-paper';
 import {useDispatch, useSelector} from 'react-redux';
@@ -9,7 +9,11 @@ import FilterPopUp from '../../../../components/atoms/FilterPopup';
 import HeaderModal from '../../../../components/atoms/HeaderModal';
 import TextView from '../../../../components/atoms/TextView';
 import Layout from '../../../../components/Layout';
-import {schoolRecomendationFilterLevel} from '../../../../config/redux/actions/schoolAction';
+import {
+  getSchoolRecomendationList,
+  resetSchoolRecomendationFilterLevel,
+  schoolRecomendationFilterLevel,
+} from '../../../../config/redux/actions/schoolAction';
 import {
   DARK_COLOR,
   PRIMARY_COLOR,
@@ -21,9 +25,54 @@ const FilterRekomendasiSekolahScreen = ({navigation}) => {
   const school = useSelector(state => state?.school);
   const child = useSelector(state => state?.child);
 
+  const price_monthly = school?.filters?.school_price_monthly;
+  const price =
+    price_monthly && price_monthly?.length > 0 ? price_monthly : ['0', '0'];
+  // harga
+  const [priceMin, setPriceMin] = useState(price[0] + '');
+  const [priceMax, setPriceMax] = useState(price[1] + '');
+  console.log('school', school, price[0]);
+
+  const onSelectedItemFacility = item => {
+    const selected = school.filters?.facility_id || [];
+    const currentItem = [...selected];
+    const checkItem = currentItem.includes(item);
+    if (checkItem) {
+      currentItem.splice(currentItem.indexOf(item), 1);
+      dispatch(
+        schoolRecomendationFilterLevel({
+          facility_id: currentItem,
+        }),
+      );
+      return;
+    }
+
+    currentItem.push(item);
+    dispatch(
+      schoolRecomendationFilterLevel({
+        facility_id: currentItem,
+      }),
+    );
+  };
+
+  const handleReset = () => {
+    dispatch(resetSchoolRecomendationFilterLevel([]));
+    dispatch(getSchoolRecomendationList({}));
+    setPriceMin('');
+    setPriceMax('');
+  };
+
+  const handleSubmit = () => {
+    dispatch(getSchoolRecomendationList(school?.filters));
+    navigation.pop();
+  };
+
   return (
     <Layout backgroundColor="#fff">
-      <HeaderModal onLeftPress={() => navigation.pop()} />
+      <HeaderModal
+        onLeftPress={() => navigation.pop()}
+        onRightPress={handleReset}
+      />
       <ScrollView style={styles.container}>
         {school?.locations && (
           <View style={styles.filterTitle}>
@@ -120,34 +169,42 @@ const FilterRekomendasiSekolahScreen = ({navigation}) => {
               placeholder="MIN"
               placeholderTextColor={SECONDARY_COLOR}
               style={styles.filterTextInput}
-              value={
-                school?.filters?.school_price_monthly &&
-                school?.filters?.school_price_monthly?.length > 0 &&
-                school?.filters?.school_price_monthly[0] + ''
-              }
+              value={priceMin}
             />
             <TextInput
               placeholder="MAX"
               placeholderTextColor={SECONDARY_COLOR}
               style={styles.filterTextInput}
-              value={
-                school?.filters?.school_price_monthly &&
-                school?.filters?.school_price_monthly?.length > 1 &&
-                school?.filters?.school_price_monthly[1] + ''
-              }
+              value={priceMax}
             />
           </View>
           <View style={styles.filterPrice}>
-            <ButtonAuto label="0-200" type="full" style={styles.buttonPrice} />
+            <ButtonAuto
+              label="0-200"
+              type="full"
+              style={styles.buttonPrice}
+              onPress={() => {
+                setPriceMin('0');
+                setPriceMax('200000');
+              }}
+            />
             <ButtonAuto
               label="200-400"
               type="full"
               style={styles.buttonPrice}
+              onPress={() => {
+                setPriceMin('200000');
+                setPriceMax('400000');
+              }}
             />
             <ButtonAuto
               label="400-600"
               type="full"
               style={[styles.buttonPrice, {marginRight: 0}]}
+              onPress={() => {
+                setPriceMin('400000');
+                setPriceMax('600000');
+              }}
             />
           </View>
         </View>
@@ -182,6 +239,7 @@ const FilterRekomendasiSekolahScreen = ({navigation}) => {
               <ListItem
                 key={item?.id}
                 label={item?.name}
+                onPress={() => onSelectedItemFacility(item?.id)}
                 selected={school.filters?.facility_id?.includes(item?.id)}
               />
             ))}
@@ -209,7 +267,13 @@ const FilterRekomendasiSekolahScreen = ({navigation}) => {
                     school.filters?.school_interest_talent_id === item?.id
                   }
                   image={item?.image}
-                  // onPress={() => setFilterAndNext(false, item?.id)}
+                  onPress={() =>
+                    dispatch(
+                      schoolRecomendationFilterLevel({
+                        school_interest_talent_id: item?.id,
+                      }),
+                    )
+                  }
                   style={{
                     container: {width: scaleWidth(27)},
                     image: {height: scaleHeight(7), width: scaleHeight(7)},
@@ -227,12 +291,14 @@ const FilterRekomendasiSekolahScreen = ({navigation}) => {
           label="Atur Ulang"
           borderColor={PRIMARY_COLOR}
           style={styles.filterActionButton}
+          onPress={handleReset}
         />
         <ButtonAuto
           label="Pakai"
           backgroundColor={PRIMARY_COLOR}
           type="full"
           style={[styles.filterActionButton, {marginRight: 0}]}
+          onPress={handleSubmit}
         />
       </View>
     </Layout>

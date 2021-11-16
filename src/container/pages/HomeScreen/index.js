@@ -43,7 +43,10 @@ const Home = ({navigation}) => {
         </View>
 
         {/* child data */}
-        <CardChildProfile data={child?.childs} />
+        <CardChildProfile
+          data={child?.childs}
+          onPressEmpty={screen => navigation.navigate('AddChild')}
+        />
 
         {/* category */}
         <View style={styles.categorySection}>
